@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="c8992f34a8ca40aaa096e853c2933da8" Name="Diagram1">
+        <EntityTypeShape EntityType="RepublicaGalacticaModel.Especie" Width="1.5" PointX="7.5" PointY="2.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="RepublicaGalacticaModel.Galaxia" Width="1.5" PointX="0.75" PointY="4" IsExpanded="true" />
+        <EntityTypeShape EntityType="RepublicaGalacticaModel.Maestro" Width="1.5" PointX="12" PointY="3.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="RepublicaGalacticaModel.MiembrosConsejo" Width="1.5" PointX="14.25" PointY="3.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="RepublicaGalacticaModel.OrdenJedi" Width="1.5" PointX="9.75" PointY="2.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="RepublicaGalacticaModel.Padawan" Width="1.5" PointX="14.25" PointY="1.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="RepublicaGalacticaModel.Planeta" Width="1.5" PointX="5.25" PointY="2.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="RepublicaGalacticaModel.Sistema" Width="1.5" PointX="3" PointY="3.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="RepublicaGalacticaModel.SistemasAmenazado" Width="1.5" PointX="5.25" PointY="5.625" IsExpanded="true" />
+        <AssociationConnector Association="RepublicaGalacticaModel.FK_IdEspecie" ManuallyRouted="false" />
+        <AssociationConnector Association="RepublicaGalacticaModel.FK_IdPlaneta" ManuallyRouted="false" />
+        <AssociationConnector Association="RepublicaGalacticaModel.FK_IdGalaxia" ManuallyRouted="false" />
+        <AssociationConnector Association="RepublicaGalacticaModel.FK_IdMaestro" ManuallyRouted="false" />
+        <AssociationConnector Association="RepublicaGalacticaModel.FK_IdMaestro1" ManuallyRouted="false" />
+        <AssociationConnector Association="RepublicaGalacticaModel.FK_IdOrdenJedi" ManuallyRouted="false" />
+        <AssociationConnector Association="RepublicaGalacticaModel.FK_IdSistemasAmenazados" ManuallyRouted="false" />
+        <AssociationConnector Association="RepublicaGalacticaModel.FK_IdOrdenJedi1" ManuallyRouted="false" />
+        <AssociationConnector Association="RepublicaGalacticaModel.FK_IdSistema" ManuallyRouted="false" />
+        <AssociationConnector Association="RepublicaGalacticaModel.FK_IdSistema1" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

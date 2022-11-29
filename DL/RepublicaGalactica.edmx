@@ -1,0 +1,656 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="RepublicaGalacticaModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Especie">
+          <Key>
+            <PropertyRef Name="IdEspecie" />
+          </Key>
+          <Property Name="IdEspecie" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Nombre" Type="varchar" MaxLength="40" />
+          <Property Name="IdPlaneta" Type="int" />
+        </EntityType>
+        <EntityType Name="Galaxia">
+          <Key>
+            <PropertyRef Name="IdGalaxia" />
+          </Key>
+          <Property Name="IdGalaxia" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Nombre" Type="varchar" MaxLength="40" />
+        </EntityType>
+        <EntityType Name="Maestro">
+          <Key>
+            <PropertyRef Name="IdMaestro" />
+          </Key>
+          <Property Name="IdMaestro" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="IdOrdenJedi" Type="int" />
+          <Property Name="IdSistemasAmenazados" Type="int" />
+          <Property Name="Rango" Type="bit" />
+        </EntityType>
+        <EntityType Name="MiembrosConsejo">
+          <Key>
+            <PropertyRef Name="IdMiembrosConsejo" />
+          </Key>
+          <Property Name="IdMiembrosConsejo" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Rango" Type="bit" />
+          <Property Name="IdMaestro" Type="int" />
+        </EntityType>
+        <EntityType Name="OrdenJedi">
+          <Key>
+            <PropertyRef Name="IdOrdenJedi" />
+          </Key>
+          <Property Name="IdOrdenJedi" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Nombre" Type="varchar" MaxLength="40" />
+          <Property Name="Edad" Type="int" />
+          <Property Name="NivelMidiclorianosSangre" Type="int" />
+          <Property Name="DatosDeInteres" Type="varchar" MaxLength="40" />
+          <Property Name="IdEspecie" Type="int" />
+        </EntityType>
+        <EntityType Name="Padawan">
+          <Key>
+            <PropertyRef Name="IdPadawan" />
+          </Key>
+          <Property Name="IdPadawan" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="IdOrdenJedi" Type="int" />
+          <Property Name="IdMaestro" Type="int" />
+        </EntityType>
+        <EntityType Name="Planeta">
+          <Key>
+            <PropertyRef Name="IdPlaneta" />
+          </Key>
+          <Property Name="IdPlaneta" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Nombre" Type="varchar" MaxLength="40" />
+          <Property Name="IdSistema" Type="int" />
+        </EntityType>
+        <EntityType Name="Sistema">
+          <Key>
+            <PropertyRef Name="IdSistema" />
+          </Key>
+          <Property Name="IdSistema" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Nombre" Type="varchar" MaxLength="40" />
+          <Property Name="IdGalaxia" Type="int" />
+        </EntityType>
+        <EntityType Name="SistemasAmenazados">
+          <Key>
+            <PropertyRef Name="IdSistemasAmenazados" />
+          </Key>
+          <Property Name="IdSistemasAmenazados" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="IdSistema" Type="int" />
+          <Property Name="Amenazado" Type="bit" />
+        </EntityType>
+        <Association Name="FK_IdEspecie">
+          <End Role="Especie" Type="Self.Especie" Multiplicity="0..1" />
+          <End Role="OrdenJedi" Type="Self.OrdenJedi" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Especie">
+              <PropertyRef Name="IdEspecie" />
+            </Principal>
+            <Dependent Role="OrdenJedi">
+              <PropertyRef Name="IdEspecie" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_IdGalaxia">
+          <End Role="Galaxia" Type="Self.Galaxia" Multiplicity="0..1" />
+          <End Role="Sistema" Type="Self.Sistema" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Galaxia">
+              <PropertyRef Name="IdGalaxia" />
+            </Principal>
+            <Dependent Role="Sistema">
+              <PropertyRef Name="IdGalaxia" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_IdMaestro">
+          <End Role="Maestro" Type="Self.Maestro" Multiplicity="0..1" />
+          <End Role="Padawan" Type="Self.Padawan" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Maestro">
+              <PropertyRef Name="IdMaestro" />
+            </Principal>
+            <Dependent Role="Padawan">
+              <PropertyRef Name="IdMaestro" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_IdMaestro1">
+          <End Role="Maestro" Type="Self.Maestro" Multiplicity="0..1" />
+          <End Role="MiembrosConsejo" Type="Self.MiembrosConsejo" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Maestro">
+              <PropertyRef Name="IdMaestro" />
+            </Principal>
+            <Dependent Role="MiembrosConsejo">
+              <PropertyRef Name="IdMaestro" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_IdOrdenJedi">
+          <End Role="OrdenJedi" Type="Self.OrdenJedi" Multiplicity="0..1" />
+          <End Role="Maestro" Type="Self.Maestro" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="OrdenJedi">
+              <PropertyRef Name="IdOrdenJedi" />
+            </Principal>
+            <Dependent Role="Maestro">
+              <PropertyRef Name="IdOrdenJedi" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_IdOrdenJedi1">
+          <End Role="OrdenJedi" Type="Self.OrdenJedi" Multiplicity="0..1" />
+          <End Role="Padawan" Type="Self.Padawan" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="OrdenJedi">
+              <PropertyRef Name="IdOrdenJedi" />
+            </Principal>
+            <Dependent Role="Padawan">
+              <PropertyRef Name="IdOrdenJedi" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_IdPlaneta">
+          <End Role="Planeta" Type="Self.Planeta" Multiplicity="0..1" />
+          <End Role="Especie" Type="Self.Especie" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Planeta">
+              <PropertyRef Name="IdPlaneta" />
+            </Principal>
+            <Dependent Role="Especie">
+              <PropertyRef Name="IdPlaneta" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_IdSistema">
+          <End Role="Sistema" Type="Self.Sistema" Multiplicity="0..1" />
+          <End Role="Planeta" Type="Self.Planeta" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Sistema">
+              <PropertyRef Name="IdSistema" />
+            </Principal>
+            <Dependent Role="Planeta">
+              <PropertyRef Name="IdSistema" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_IdSistema1">
+          <End Role="Sistema" Type="Self.Sistema" Multiplicity="0..1" />
+          <End Role="SistemasAmenazados" Type="Self.SistemasAmenazados" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Sistema">
+              <PropertyRef Name="IdSistema" />
+            </Principal>
+            <Dependent Role="SistemasAmenazados">
+              <PropertyRef Name="IdSistema" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_IdSistemasAmenazados">
+          <End Role="SistemasAmenazados" Type="Self.SistemasAmenazados" Multiplicity="0..1" />
+          <End Role="Maestro" Type="Self.Maestro" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SistemasAmenazados">
+              <PropertyRef Name="IdSistemasAmenazados" />
+            </Principal>
+            <Dependent Role="Maestro">
+              <PropertyRef Name="IdSistemasAmenazados" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Function Name="Informe" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <EntityContainer Name="RepublicaGalacticaModelStoreContainer">
+          <EntitySet Name="Especie" EntityType="Self.Especie" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Galaxia" EntityType="Self.Galaxia" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Maestro" EntityType="Self.Maestro" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="MiembrosConsejo" EntityType="Self.MiembrosConsejo" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="OrdenJedi" EntityType="Self.OrdenJedi" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Padawan" EntityType="Self.Padawan" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Planeta" EntityType="Self.Planeta" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Sistema" EntityType="Self.Sistema" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="SistemasAmenazados" EntityType="Self.SistemasAmenazados" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_IdEspecie" Association="Self.FK_IdEspecie">
+            <End Role="Especie" EntitySet="Especie" />
+            <End Role="OrdenJedi" EntitySet="OrdenJedi" />
+          </AssociationSet>
+          <AssociationSet Name="FK_IdGalaxia" Association="Self.FK_IdGalaxia">
+            <End Role="Galaxia" EntitySet="Galaxia" />
+            <End Role="Sistema" EntitySet="Sistema" />
+          </AssociationSet>
+          <AssociationSet Name="FK_IdMaestro" Association="Self.FK_IdMaestro">
+            <End Role="Maestro" EntitySet="Maestro" />
+            <End Role="Padawan" EntitySet="Padawan" />
+          </AssociationSet>
+          <AssociationSet Name="FK_IdMaestro1" Association="Self.FK_IdMaestro1">
+            <End Role="Maestro" EntitySet="Maestro" />
+            <End Role="MiembrosConsejo" EntitySet="MiembrosConsejo" />
+          </AssociationSet>
+          <AssociationSet Name="FK_IdOrdenJedi" Association="Self.FK_IdOrdenJedi">
+            <End Role="OrdenJedi" EntitySet="OrdenJedi" />
+            <End Role="Maestro" EntitySet="Maestro" />
+          </AssociationSet>
+          <AssociationSet Name="FK_IdOrdenJedi1" Association="Self.FK_IdOrdenJedi1">
+            <End Role="OrdenJedi" EntitySet="OrdenJedi" />
+            <End Role="Padawan" EntitySet="Padawan" />
+          </AssociationSet>
+          <AssociationSet Name="FK_IdPlaneta" Association="Self.FK_IdPlaneta">
+            <End Role="Planeta" EntitySet="Planeta" />
+            <End Role="Especie" EntitySet="Especie" />
+          </AssociationSet>
+          <AssociationSet Name="FK_IdSistema" Association="Self.FK_IdSistema">
+            <End Role="Sistema" EntitySet="Sistema" />
+            <End Role="Planeta" EntitySet="Planeta" />
+          </AssociationSet>
+          <AssociationSet Name="FK_IdSistema1" Association="Self.FK_IdSistema1">
+            <End Role="Sistema" EntitySet="Sistema" />
+            <End Role="SistemasAmenazados" EntitySet="SistemasAmenazados" />
+          </AssociationSet>
+          <AssociationSet Name="FK_IdSistemasAmenazados" Association="Self.FK_IdSistemasAmenazados">
+            <End Role="SistemasAmenazados" EntitySet="SistemasAmenazados" />
+            <End Role="Maestro" EntitySet="Maestro" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="RepublicaGalacticaModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Especie">
+          <Key>
+            <PropertyRef Name="IdEspecie" />
+          </Key>
+          <Property Name="IdEspecie" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Nombre" Type="String" MaxLength="40" FixedLength="false" Unicode="false" />
+          <Property Name="IdPlaneta" Type="Int32" />
+          <NavigationProperty Name="OrdenJedis" Relationship="Self.FK_IdEspecie" FromRole="Especie" ToRole="OrdenJedi" />
+          <NavigationProperty Name="Planeta" Relationship="Self.FK_IdPlaneta" FromRole="Especie" ToRole="Planeta" />
+        </EntityType>
+        <EntityType Name="Galaxia">
+          <Key>
+            <PropertyRef Name="IdGalaxia" />
+          </Key>
+          <Property Name="IdGalaxia" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Nombre" Type="String" MaxLength="40" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Sistemas" Relationship="Self.FK_IdGalaxia" FromRole="Galaxia" ToRole="Sistema" />
+        </EntityType>
+        <EntityType Name="Maestro">
+          <Key>
+            <PropertyRef Name="IdMaestro" />
+          </Key>
+          <Property Name="IdMaestro" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="IdOrdenJedi" Type="Int32" />
+          <Property Name="IdSistemasAmenazados" Type="Int32" />
+          <Property Name="Rango" Type="Boolean" />
+          <NavigationProperty Name="Padawans" Relationship="Self.FK_IdMaestro" FromRole="Maestro" ToRole="Padawan" />
+          <NavigationProperty Name="MiembrosConsejoes" Relationship="Self.FK_IdMaestro1" FromRole="Maestro" ToRole="MiembrosConsejo" />
+          <NavigationProperty Name="OrdenJedi" Relationship="Self.FK_IdOrdenJedi" FromRole="Maestro" ToRole="OrdenJedi" />
+          <NavigationProperty Name="SistemasAmenazado" Relationship="Self.FK_IdSistemasAmenazados" FromRole="Maestro" ToRole="SistemasAmenazados" />
+        </EntityType>
+        <EntityType Name="MiembrosConsejo">
+          <Key>
+            <PropertyRef Name="IdMiembrosConsejo" />
+          </Key>
+          <Property Name="IdMiembrosConsejo" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Rango" Type="Boolean" />
+          <Property Name="IdMaestro" Type="Int32" />
+          <NavigationProperty Name="Maestro" Relationship="Self.FK_IdMaestro1" FromRole="MiembrosConsejo" ToRole="Maestro" />
+        </EntityType>
+        <EntityType Name="OrdenJedi">
+          <Key>
+            <PropertyRef Name="IdOrdenJedi" />
+          </Key>
+          <Property Name="IdOrdenJedi" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Nombre" Type="String" MaxLength="40" FixedLength="false" Unicode="false" />
+          <Property Name="Edad" Type="Int32" />
+          <Property Name="NivelMidiclorianosSangre" Type="Int32" />
+          <Property Name="DatosDeInteres" Type="String" MaxLength="40" FixedLength="false" Unicode="false" />
+          <Property Name="IdEspecie" Type="Int32" />
+          <NavigationProperty Name="Especie" Relationship="Self.FK_IdEspecie" FromRole="OrdenJedi" ToRole="Especie" />
+          <NavigationProperty Name="Maestroes" Relationship="Self.FK_IdOrdenJedi" FromRole="OrdenJedi" ToRole="Maestro" />
+          <NavigationProperty Name="Padawans" Relationship="Self.FK_IdOrdenJedi1" FromRole="OrdenJedi" ToRole="Padawan" />
+        </EntityType>
+        <EntityType Name="Padawan">
+          <Key>
+            <PropertyRef Name="IdPadawan" />
+          </Key>
+          <Property Name="IdPadawan" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="IdOrdenJedi" Type="Int32" />
+          <Property Name="IdMaestro" Type="Int32" />
+          <NavigationProperty Name="Maestro" Relationship="Self.FK_IdMaestro" FromRole="Padawan" ToRole="Maestro" />
+          <NavigationProperty Name="OrdenJedi" Relationship="Self.FK_IdOrdenJedi1" FromRole="Padawan" ToRole="OrdenJedi" />
+        </EntityType>
+        <EntityType Name="Planeta">
+          <Key>
+            <PropertyRef Name="IdPlaneta" />
+          </Key>
+          <Property Name="IdPlaneta" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Nombre" Type="String" MaxLength="40" FixedLength="false" Unicode="false" />
+          <Property Name="IdSistema" Type="Int32" />
+          <NavigationProperty Name="Especies" Relationship="Self.FK_IdPlaneta" FromRole="Planeta" ToRole="Especie" />
+          <NavigationProperty Name="Sistema" Relationship="Self.FK_IdSistema" FromRole="Planeta" ToRole="Sistema" />
+        </EntityType>
+        <EntityType Name="Sistema">
+          <Key>
+            <PropertyRef Name="IdSistema" />
+          </Key>
+          <Property Name="IdSistema" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Nombre" Type="String" MaxLength="40" FixedLength="false" Unicode="false" />
+          <Property Name="IdGalaxia" Type="Int32" />
+          <NavigationProperty Name="Galaxia" Relationship="Self.FK_IdGalaxia" FromRole="Sistema" ToRole="Galaxia" />
+          <NavigationProperty Name="Planetas" Relationship="Self.FK_IdSistema" FromRole="Sistema" ToRole="Planeta" />
+          <NavigationProperty Name="SistemasAmenazados" Relationship="Self.FK_IdSistema1" FromRole="Sistema" ToRole="SistemasAmenazados" />
+        </EntityType>
+        <EntityType Name="SistemasAmenazado">
+          <Key>
+            <PropertyRef Name="IdSistemasAmenazados" />
+          </Key>
+          <Property Name="IdSistemasAmenazados" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="IdSistema" Type="Int32" />
+          <Property Name="Amenazado" Type="Boolean" />
+          <NavigationProperty Name="Maestroes" Relationship="Self.FK_IdSistemasAmenazados" FromRole="SistemasAmenazados" ToRole="Maestro" />
+          <NavigationProperty Name="Sistema" Relationship="Self.FK_IdSistema1" FromRole="SistemasAmenazados" ToRole="Sistema" />
+        </EntityType>
+        <Association Name="FK_IdEspecie">
+          <End Role="Especie" Type="Self.Especie" Multiplicity="0..1" />
+          <End Role="OrdenJedi" Type="Self.OrdenJedi" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Especie">
+              <PropertyRef Name="IdEspecie" />
+            </Principal>
+            <Dependent Role="OrdenJedi">
+              <PropertyRef Name="IdEspecie" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_IdPlaneta">
+          <End Role="Planeta" Type="Self.Planeta" Multiplicity="0..1" />
+          <End Role="Especie" Type="Self.Especie" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Planeta">
+              <PropertyRef Name="IdPlaneta" />
+            </Principal>
+            <Dependent Role="Especie">
+              <PropertyRef Name="IdPlaneta" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_IdGalaxia">
+          <End Role="Galaxia" Type="Self.Galaxia" Multiplicity="0..1" />
+          <End Role="Sistema" Type="Self.Sistema" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Galaxia">
+              <PropertyRef Name="IdGalaxia" />
+            </Principal>
+            <Dependent Role="Sistema">
+              <PropertyRef Name="IdGalaxia" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_IdMaestro">
+          <End Role="Maestro" Type="Self.Maestro" Multiplicity="0..1" />
+          <End Role="Padawan" Type="Self.Padawan" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Maestro">
+              <PropertyRef Name="IdMaestro" />
+            </Principal>
+            <Dependent Role="Padawan">
+              <PropertyRef Name="IdMaestro" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_IdMaestro1">
+          <End Role="Maestro" Type="Self.Maestro" Multiplicity="0..1" />
+          <End Role="MiembrosConsejo" Type="Self.MiembrosConsejo" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Maestro">
+              <PropertyRef Name="IdMaestro" />
+            </Principal>
+            <Dependent Role="MiembrosConsejo">
+              <PropertyRef Name="IdMaestro" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_IdOrdenJedi">
+          <End Role="OrdenJedi" Type="Self.OrdenJedi" Multiplicity="0..1" />
+          <End Role="Maestro" Type="Self.Maestro" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="OrdenJedi">
+              <PropertyRef Name="IdOrdenJedi" />
+            </Principal>
+            <Dependent Role="Maestro">
+              <PropertyRef Name="IdOrdenJedi" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_IdSistemasAmenazados">
+          <End Role="SistemasAmenazados" Type="Self.SistemasAmenazado" Multiplicity="0..1" />
+          <End Role="Maestro" Type="Self.Maestro" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SistemasAmenazados">
+              <PropertyRef Name="IdSistemasAmenazados" />
+            </Principal>
+            <Dependent Role="Maestro">
+              <PropertyRef Name="IdSistemasAmenazados" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_IdOrdenJedi1">
+          <End Role="OrdenJedi" Type="Self.OrdenJedi" Multiplicity="0..1" />
+          <End Role="Padawan" Type="Self.Padawan" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="OrdenJedi">
+              <PropertyRef Name="IdOrdenJedi" />
+            </Principal>
+            <Dependent Role="Padawan">
+              <PropertyRef Name="IdOrdenJedi" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_IdSistema">
+          <End Role="Sistema" Type="Self.Sistema" Multiplicity="0..1" />
+          <End Role="Planeta" Type="Self.Planeta" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Sistema">
+              <PropertyRef Name="IdSistema" />
+            </Principal>
+            <Dependent Role="Planeta">
+              <PropertyRef Name="IdSistema" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_IdSistema1">
+          <End Role="Sistema" Type="Self.Sistema" Multiplicity="0..1" />
+          <End Role="SistemasAmenazados" Type="Self.SistemasAmenazado" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Sistema">
+              <PropertyRef Name="IdSistema" />
+            </Principal>
+            <Dependent Role="SistemasAmenazados">
+              <PropertyRef Name="IdSistema" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="RepublicaGalacticaEntities1" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Especies" EntityType="Self.Especie" />
+          <EntitySet Name="Galaxias" EntityType="Self.Galaxia" />
+          <EntitySet Name="Maestroes" EntityType="Self.Maestro" />
+          <EntitySet Name="MiembrosConsejoes" EntityType="Self.MiembrosConsejo" />
+          <EntitySet Name="OrdenJedis" EntityType="Self.OrdenJedi" />
+          <EntitySet Name="Padawans" EntityType="Self.Padawan" />
+          <EntitySet Name="Planetas" EntityType="Self.Planeta" />
+          <EntitySet Name="Sistemas" EntityType="Self.Sistema" />
+          <EntitySet Name="SistemasAmenazados" EntityType="Self.SistemasAmenazado" />
+          <AssociationSet Name="FK_IdEspecie" Association="Self.FK_IdEspecie">
+            <End Role="Especie" EntitySet="Especies" />
+            <End Role="OrdenJedi" EntitySet="OrdenJedis" />
+          </AssociationSet>
+          <AssociationSet Name="FK_IdPlaneta" Association="Self.FK_IdPlaneta">
+            <End Role="Planeta" EntitySet="Planetas" />
+            <End Role="Especie" EntitySet="Especies" />
+          </AssociationSet>
+          <AssociationSet Name="FK_IdGalaxia" Association="Self.FK_IdGalaxia">
+            <End Role="Galaxia" EntitySet="Galaxias" />
+            <End Role="Sistema" EntitySet="Sistemas" />
+          </AssociationSet>
+          <AssociationSet Name="FK_IdMaestro" Association="Self.FK_IdMaestro">
+            <End Role="Maestro" EntitySet="Maestroes" />
+            <End Role="Padawan" EntitySet="Padawans" />
+          </AssociationSet>
+          <AssociationSet Name="FK_IdMaestro1" Association="Self.FK_IdMaestro1">
+            <End Role="Maestro" EntitySet="Maestroes" />
+            <End Role="MiembrosConsejo" EntitySet="MiembrosConsejoes" />
+          </AssociationSet>
+          <AssociationSet Name="FK_IdOrdenJedi" Association="Self.FK_IdOrdenJedi">
+            <End Role="OrdenJedi" EntitySet="OrdenJedis" />
+            <End Role="Maestro" EntitySet="Maestroes" />
+          </AssociationSet>
+          <AssociationSet Name="FK_IdSistemasAmenazados" Association="Self.FK_IdSistemasAmenazados">
+            <End Role="SistemasAmenazados" EntitySet="SistemasAmenazados" />
+            <End Role="Maestro" EntitySet="Maestroes" />
+          </AssociationSet>
+          <AssociationSet Name="FK_IdOrdenJedi1" Association="Self.FK_IdOrdenJedi1">
+            <End Role="OrdenJedi" EntitySet="OrdenJedis" />
+            <End Role="Padawan" EntitySet="Padawans" />
+          </AssociationSet>
+          <AssociationSet Name="FK_IdSistema" Association="Self.FK_IdSistema">
+            <End Role="Sistema" EntitySet="Sistemas" />
+            <End Role="Planeta" EntitySet="Planetas" />
+          </AssociationSet>
+          <AssociationSet Name="FK_IdSistema1" Association="Self.FK_IdSistema1">
+            <End Role="Sistema" EntitySet="Sistemas" />
+            <End Role="SistemasAmenazados" EntitySet="SistemasAmenazados" />
+          </AssociationSet>
+          <FunctionImport Name="Informe" ReturnType="Collection(RepublicaGalacticaModel.Informe_Result)" />
+        </EntityContainer>
+        <ComplexType Name="Informe_Result">
+          <Property Type="String" Name="NombreCaballero" Nullable="true" MaxLength="40" />
+          <Property Type="Int32" Name="IdSistemasAmenazados" Nullable="false" />
+          <Property Type="String" Name="NombreCombate" Nullable="true" MaxLength="40" />
+          <Property Type="Boolean" Name="Rango" Nullable="true" />
+        </ComplexType>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="RepublicaGalacticaModelStoreContainer" CdmEntityContainer="RepublicaGalacticaEntities1">
+          <EntitySetMapping Name="Especies">
+            <EntityTypeMapping TypeName="RepublicaGalacticaModel.Especie">
+              <MappingFragment StoreEntitySet="Especie">
+                <ScalarProperty Name="IdEspecie" ColumnName="IdEspecie" />
+                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+                <ScalarProperty Name="IdPlaneta" ColumnName="IdPlaneta" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Galaxias">
+            <EntityTypeMapping TypeName="RepublicaGalacticaModel.Galaxia">
+              <MappingFragment StoreEntitySet="Galaxia">
+                <ScalarProperty Name="IdGalaxia" ColumnName="IdGalaxia" />
+                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Maestroes">
+            <EntityTypeMapping TypeName="RepublicaGalacticaModel.Maestro">
+              <MappingFragment StoreEntitySet="Maestro">
+                <ScalarProperty Name="IdMaestro" ColumnName="IdMaestro" />
+                <ScalarProperty Name="IdOrdenJedi" ColumnName="IdOrdenJedi" />
+                <ScalarProperty Name="IdSistemasAmenazados" ColumnName="IdSistemasAmenazados" />
+                <ScalarProperty Name="Rango" ColumnName="Rango" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="MiembrosConsejoes">
+            <EntityTypeMapping TypeName="RepublicaGalacticaModel.MiembrosConsejo">
+              <MappingFragment StoreEntitySet="MiembrosConsejo">
+                <ScalarProperty Name="IdMiembrosConsejo" ColumnName="IdMiembrosConsejo" />
+                <ScalarProperty Name="Rango" ColumnName="Rango" />
+                <ScalarProperty Name="IdMaestro" ColumnName="IdMaestro" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="OrdenJedis">
+            <EntityTypeMapping TypeName="RepublicaGalacticaModel.OrdenJedi">
+              <MappingFragment StoreEntitySet="OrdenJedi">
+                <ScalarProperty Name="IdOrdenJedi" ColumnName="IdOrdenJedi" />
+                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+                <ScalarProperty Name="Edad" ColumnName="Edad" />
+                <ScalarProperty Name="NivelMidiclorianosSangre" ColumnName="NivelMidiclorianosSangre" />
+                <ScalarProperty Name="DatosDeInteres" ColumnName="DatosDeInteres" />
+                <ScalarProperty Name="IdEspecie" ColumnName="IdEspecie" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Padawans">
+            <EntityTypeMapping TypeName="RepublicaGalacticaModel.Padawan">
+              <MappingFragment StoreEntitySet="Padawan">
+                <ScalarProperty Name="IdPadawan" ColumnName="IdPadawan" />
+                <ScalarProperty Name="IdOrdenJedi" ColumnName="IdOrdenJedi" />
+                <ScalarProperty Name="IdMaestro" ColumnName="IdMaestro" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Planetas">
+            <EntityTypeMapping TypeName="RepublicaGalacticaModel.Planeta">
+              <MappingFragment StoreEntitySet="Planeta">
+                <ScalarProperty Name="IdPlaneta" ColumnName="IdPlaneta" />
+                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+                <ScalarProperty Name="IdSistema" ColumnName="IdSistema" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Sistemas">
+            <EntityTypeMapping TypeName="RepublicaGalacticaModel.Sistema">
+              <MappingFragment StoreEntitySet="Sistema">
+                <ScalarProperty Name="IdSistema" ColumnName="IdSistema" />
+                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+                <ScalarProperty Name="IdGalaxia" ColumnName="IdGalaxia" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="SistemasAmenazados">
+            <EntityTypeMapping TypeName="RepublicaGalacticaModel.SistemasAmenazado">
+              <MappingFragment StoreEntitySet="SistemasAmenazados">
+                <ScalarProperty Name="IdSistemasAmenazados" ColumnName="IdSistemasAmenazados" />
+                <ScalarProperty Name="IdSistema" ColumnName="IdSistema" />
+                <ScalarProperty Name="Amenazado" ColumnName="Amenazado" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="Informe" FunctionName="RepublicaGalacticaModel.Store.Informe">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="RepublicaGalacticaModel.Informe_Result">
+                <ScalarProperty Name="NombreCaballero" ColumnName="NombreCaballero" />
+                <ScalarProperty Name="IdSistemasAmenazados" ColumnName="IdSistemasAmenazados" />
+                <ScalarProperty Name="NombreCombate" ColumnName="NombreCombate" />
+                <ScalarProperty Name="Rango" ColumnName="Rango" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
